@@ -4,7 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Vehicle {
     
-    private String manufacturer;
+    private MANUFACTURER manufacturer;
     private String model;
     private int years;
     private int id;
@@ -14,7 +14,7 @@ public class Vehicle {
     private static final int MAXYR = 30;
     private static final String CP = "ZD - ";
 
-    public Vehicle(String manufact, String model) {
+    public Vehicle(MANUFACTURER manufact, String model) {
         this.manufacturer = manufact;
         this.model = model;
         this.years = ThreadLocalRandom.current().nextInt(MINYR, MAXYR);

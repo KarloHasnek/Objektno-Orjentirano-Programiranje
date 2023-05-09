@@ -1,0 +1,5 @@
+Pass by reference! - prouciti
+
+npr.
+    Kad imamo ArrayList vracamo void jer bi inace previse memorije oduzelo
+    
