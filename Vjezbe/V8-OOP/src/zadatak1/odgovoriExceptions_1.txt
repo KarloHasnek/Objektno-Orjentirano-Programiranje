@@ -1,0 +1,2 @@
+4. FileNotFound exception je I/O Exception (Input/output)
+6. Ako je file Read-Only tip onda se ne moze pisati u njega nego samo citati

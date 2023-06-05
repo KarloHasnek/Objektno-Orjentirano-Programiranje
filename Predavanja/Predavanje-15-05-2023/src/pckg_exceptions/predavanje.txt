@@ -1,0 +1,2 @@
+Runtime exception - unchecked exception
+Compiler exception - checked exception

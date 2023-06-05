@@ -1,0 +1,4 @@
+Vjezba 7
+---------
+Queue - FIFO 
+A blocking queue is a queue which provides insert and remove operations that block or keep waiting until they are performed.

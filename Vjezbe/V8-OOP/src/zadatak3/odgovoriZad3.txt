@@ -1,0 +1,2 @@
+Kao izlaz smo dobili "ArrayIndexOutOfBoundsException" iznimku za koju nam je kompajler dao unaprijed upozorenje, ali ne
+i grešku. Upozorava nas da tražena vrijednost ne postoji te da je očekivan exception

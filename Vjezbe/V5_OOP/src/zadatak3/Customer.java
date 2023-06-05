@@ -3,7 +3,7 @@ package zadatak3;
 public class Customer {
     private String name;
     private int id;
-    private static int cntID = 100;
+    private static int cntID = 10;
 
     public Customer(String name) {
         this.name = name;
@@ -12,7 +12,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer {name: " + name + ", id: " + id + "}";
+        return "Customer -> " + name + " id: " + id;
     }
 
     public void customerInfo() {

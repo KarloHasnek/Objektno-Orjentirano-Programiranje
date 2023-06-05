@@ -4,42 +4,42 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Package {
-    
+
     private int id;
     private static int cntID = 100;
+    private String webShop;
     private String destination;
     private Customer customer;
     private float packagePrice;
-    private int totalNumber;
-    private String webShop;
+    private int totalItems;
     private List<Item> items;
-    private static final float MINY = 10;
-    private static final float MAXY = 100;
-    private static final int PCS = 10;
+    private static final float MINF = 10;
+    private static final float MAXF = 150;
+    private static final int KOMS = 10;
+    private String[] typeItems = {"TShirt", "Sneakers"};
+    private Set<Payment> payments;
     private Scanner sc;
-    private String[] typeItems = {"T-Shirts", "Sneakers"};
-    private Set<Payment> paymentMethods;
 
-    public Package(String shop, String destination, Customer customer, Payment paymentMethod){
-        this.id = cntID++;
-        this.items = new ArrayList<>();
-        this.paymentMethods = new HashSet<>();
-        this.webShop = shop;
+    public Package(String webShop, String destination, Customer customer, Payment payment) {
+        this.webShop = webShop;
         this.destination = destination;
         this.customer = customer;
-        this.paymentMethods.add(paymentMethod);
+        this.id = cntID++;
+        this.items = new ArrayList<>();
+        this.payments = new HashSet<>();
+        this.payments.add(payment);
     }
 
-    public void setScanner(Scanner scanner){
-        this.sc = scanner;
+    public void setSc(Scanner sc) {
+        this.sc = sc;
     }
 
-    public boolean checkPayment(){
-        System.out.println("Enter payment method...");
+    public boolean checkPaymentForPackage() {
         boolean status = false;
+        System.out.println("enter payment method...");
         String paymentMethod = sc.nextLine();
-        for (Payment payment : paymentMethods) {
-            if (payment.getPaymentMethod().equals(paymentMethod)) {
+        for (Payment payment : payments) {
+            if (payment.getPayment().equals(paymentMethod)) {
                 status = true;
                 break;
             }
@@ -47,163 +47,93 @@ public class Package {
         return status;
     }
 
-    private float randPrice(){
-        return ThreadLocalRandom.current().nextFloat(MINY, MAXY);
+    private float randomItemPrice() {
+        return ThreadLocalRandom.current().nextFloat(MINF, MAXF);
     }
 
-    private int randPcs(){
-        return ThreadLocalRandom.current().nextInt(PCS);
+    private int randomNumItems() {
+        return ThreadLocalRandom.current().nextInt(KOMS);
     }
 
-    public void putContent(){
-        int numItems = randPcs();
+    public void putContent() {
+        int numItems = randomNumItems();
         int[] indx = new int[numItems];
-
-        System.out.println("Adding content to package...");
-        for (int i = 0; i < numItems; i++) {
-            indx[i] = ThreadLocalRandom.current().nextInt(typeItems.length);
+        for (int k = 0; k < numItems; k++) {
+            indx[k] = ThreadLocalRandom.current().nextInt(typeItems.length);
         }
-
-        for (int i = 0; i < numItems; i++) {
-            if (indx[i] == 0) {
-                T_Shirt tShirt = new T_Shirt(randPrice(), randPcs());
-                items.add(tShirt);
-            } else {
-                Sneakers sneakers = new Sneakers(randPrice(), randPcs());
+        for (int k = 0; k < numItems; k++) {
+            if (indx[k] == 0) {
+                T_Shirt tshirt = new T_Shirt(randomItemPrice(), randomNumItems());
+                items.add(tshirt);
+            } else if (indx[k] == 1) {
+                Sneakers sneakers = new Sneakers(randomItemPrice(), randomNumItems());
                 items.add(sneakers);
             }
         }
-        System.out.println("Package filled.");
-        calculateTotalPackagePrice();
-        this.totalNumber = getTotalNumber();
+        System.out.println("Finished putting content into package...");
+        calculateTotalItemsPrice();
+        calculateTotalPackageItems();
     }
 
-    public void calculateTotalPackagePrice(){
+    public void calculateTotalItemsPrice() {
         for (Item item : items) {
-            packagePrice += item.itemPrice();
+            packagePrice += item.calculatePrice();
         }
     }
 
-    public int getTotalNumber(){
-        return items.size();
+    public void calculateTotalPackageItems() {
+        for (Item item : items) {
+            totalItems += item.getNumItems();
+        }
     }
-
-    
 
     @Override
     public String toString() {
-        return "Package [\nid=" + id + "\ndestination=" + destination + "\ncustomer=" + customer + "\npackagePrice="
-                + packagePrice + "\ntotalNumber=" + totalNumber + "\nwebShop=" + webShop + "\nitems=" + items + "\n]";
+        return "Package{" +
+                "id=" + id +
+                ", webShop='" + webShop + '\'' +
+                ", destination='" + destination + '\'' +
+                ", customer=" + customer +
+                ", packagePrice=" + packagePrice +
+                ", totalItems=" + totalItems +
+                ", items=" + items +
+                '}';
     }
 
-    public void packageInfo(){
+    public void packageInfo() {
         System.out.println(this);
     }
 
+    class T_Shirt extends Item {
 
-    private class T_Shirt extends Item{
-
-        protected T_Shirt(float price, int pcs) {
-            super(price, pcs);
+        protected T_Shirt(float itemPrice, int numItems) {
+            super(itemPrice, numItems);
         }
 
-        float tShirtPrice;
-        int tShirtPcs;
-        
         @Override
-        protected float getPrice() {
-            return tShirtPrice;
+        protected float calculatePrice() {
+            return this.itemPrice*this.numItems;
         }
-        
         @Override
-        protected int getPcs() {
-            return tShirtPcs;
+        public String toString() {
+            return this.getClass().getSimpleName();
         }
-        
-        @Override
-        protected float itemPrice() {
-            return this.tShirtPrice*this.tShirtPcs;
-        }
-        
     }
 
-    private class Pants extends Item{
+    class Sneakers extends Item {
 
-        protected Pants(float price, int pcs) {
-            super(price, pcs);
+        protected Sneakers(float itemPrice, int numItems) {
+            super(itemPrice, numItems);
         }
 
-        float pantsPrice;
-        int pantsPcs;
-        
         @Override
-        protected float getPrice() {
-            return pantsPrice;
+        protected float calculatePrice() {
+            return this.itemPrice*this.numItems*0.9f;
         }
-        
+
         @Override
-        protected int getPcs() {
-            return pantsPcs;
+        public String toString() {
+            return this.getClass().getSimpleName();
         }
-        
-        @Override
-        protected float itemPrice() {
-            return this.pantsPrice*this.pantsPcs;
-        }
-        
     }
-
-    private class Helmet extends Item{
-
-        protected Helmet(float price, int pcs) {
-            super(price, pcs);
-        }
-
-        float helmetPrice;
-        int helmetPcs;
-        
-        @Override
-        protected float getPrice() {
-            return helmetPrice;
-        }
-        
-        @Override
-        protected int getPcs() {
-            return helmetPcs;
-        }
-        
-        @Override
-        protected float itemPrice() {
-            return this.helmetPrice*this.helmetPcs;
-        }
-        
-    }
-
-    private class Sneakers extends Item{
-
-        protected Sneakers(float price, int pcs) {
-            super(price, pcs);
-        }
-
-        float sneakersPrice;
-        int sneakersPcs;
-        
-        @Override
-        protected float getPrice() {
-            return sneakersPrice;
-        }
-        
-        @Override
-        protected int getPcs() {
-            return sneakersPcs;
-        }
-        
-        @Override
-        protected float itemPrice() {
-            return this.sneakersPrice*this.sneakersPcs;
-        }
-        
-    }
-
 }
-

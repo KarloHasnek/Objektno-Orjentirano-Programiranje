@@ -1,21 +1,21 @@
 package zadatak3;
 
 public class Payment {
-    
-    private String paymentMethod;
 
-    public Payment(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    private String payment;
+
+    public Payment(String payment) {
+        this.payment = payment;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
+    public String getPayment() {
+        return payment;
     }
 
     @Override
     public String toString() {
-        return "Payment [paymentMethod=" + paymentMethod + "]";
+        return "Payment{" +
+                "payment='" + payment + '\'' +
+                '}';
     }
-
-    
 }
