@@ -1,0 +1,6 @@
+student_id, stud_name, university, courses
+100,S-NAME_1,UNIZD,cr_1 cr_4 cr_5
+123,S-NAME_2,UNIDU,cs it1 sec1
+201,S-NAME_3,UNIST,mat cnet1 prog1 prog2
+311,S-NAME_4,UNIRI,oe dig1 aut rob algs
+155,S-NAME_5,UNIZG,nlp is ir seo
