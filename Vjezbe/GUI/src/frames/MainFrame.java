@@ -1,5 +1,6 @@
 package frames;
 
+import client.ClientPanel;
 import login.LoginListener;
 import login.LoginPanel;
 import login.LoginPanelEvent;
@@ -12,6 +13,7 @@ public class MainFrame extends JFrame {
     // Atributi MainFrame-a (paneli)
     private LoginPanel loginPanel;
     private PopupFrame popupFrame;
+    private ClientPanel clientPanel;
 
     // Konstruktor MainFrame-a
     public MainFrame() {
@@ -20,11 +22,11 @@ public class MainFrame extends JFrame {
         super("Aplikacija");
 
         // Default values and frame actions
-        setSize(800, 400);
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Sets JFrame to center of the screen
         setVisible(true);
-        setResizable(false);
+        setResizable(true);
 
         // initialize components, layout components and activate app
         initComps();
@@ -35,11 +37,14 @@ public class MainFrame extends JFrame {
     private void initComps(){
         loginPanel = new LoginPanel();
         popupFrame = new PopupFrame();
+        clientPanel = new ClientPanel();
     }
 
     private void layoutComps(){
         add(loginPanel, BorderLayout.CENTER);
         popupFrame.setVisible(false);
+        add(clientPanel, BorderLayout.NORTH);
+        clientPanel.setVisible(false);
     }
 
     private void activateApp(){
@@ -52,7 +57,9 @@ public class MainFrame extends JFrame {
 
                 if (username.equals("admin") && password.equals("admin")) {
                     loginPanel.setVisible(false);
-
+                    clientPanel.setVisible(true);
+                    changeResizable();
+                    setLocationRelativeTo(null);
                 } else {
                     JOptionPane.showMessageDialog(popupFrame, "Wrong username or password!", "Login failed", JOptionPane.ERROR_MESSAGE);
                 }
@@ -61,6 +68,15 @@ public class MainFrame extends JFrame {
 
         loginPanel.activateComps();
 
+    }
+
+    private void changeResizable(){
+        if (isResizable()) {
+            setSize(800, 600);
+            setResizable(false);
+        } else {
+            setResizable(true);
+        }
     }
 
 }

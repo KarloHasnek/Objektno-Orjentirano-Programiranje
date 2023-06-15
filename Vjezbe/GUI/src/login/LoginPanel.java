@@ -1,5 +1,7 @@
 package login;
 
+import client.ClientPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,8 +26,6 @@ public class LoginPanel extends JPanel {
     }
 
     private void initComps(){
-        Dimension dim = this.getPreferredSize();
-        dim.height = 150;
         usernameField = new JTextField(10);
         passwordField = new JPasswordField(10);
         confirmButton = new JButton("Confirm");
