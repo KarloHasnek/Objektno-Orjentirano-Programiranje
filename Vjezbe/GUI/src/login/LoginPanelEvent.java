@@ -1,6 +1,5 @@
 package login;
 
-import java.util.Arrays;
 import java.util.EventObject;
 
 public class LoginPanelEvent extends EventObject{
